@@ -18,7 +18,7 @@ export default defineConfig({
 
     manifest: {
       name: 'geo_loc',
-      short_name: 'geo1',
+      short_name: 'geo_live',
       description: 'une application de geolocalisation',
       theme_color: '#73A3BE',
     },
