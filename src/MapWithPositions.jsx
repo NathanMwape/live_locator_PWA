@@ -65,7 +65,7 @@ const MapWithPositions = () => {
   const nomUtilisateur = localStorage.getItem('nomUtilisateur');
 
   const fetchPositions = () => {
-    fetch(`http://185.98.128.37/api_test/index.php/position/?utilisateur_id=${utilisateurId}`)
+    fetch(`http://localhost/api_test/index.php/position/?utilisateur_id=${utilisateurId}`)
       .then(response => response.json())
       .then(data => {
         if (Array.isArray(data)) {
@@ -89,7 +89,7 @@ const MapWithPositions = () => {
           if (!lastPosition || haversineDistance(lastPosition, currentPosition) >= 1) {
             setUserPosition(currentPosition);
 
-            fetch('http://185.98.128.37/api_test/index.php/positions', {
+            fetch('http://localhost/api_test/index.php/positions', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ utilisateurId, latitude, longitude }),
