@@ -54,3 +54,94 @@ h2 {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+/* Main styles for larger screens */
+.control-panel {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.user-info {
+  font-size: 20px;
+  color: #39583a;
+  margin-bottom: 20px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  flex-wrap: wrap; /* Allows buttons to wrap on small screens */
+  margin-bottom: 10px;
+}
+
+button {
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 15px 20px;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.icon-large {
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+.btn-refresh {
+  background-color: #28a745;
+}
+
+.btn-center {
+  background-color: #17a2b8;
+}
+
+.btn-stop {
+  background-color: #dc3545;
+}
+
+.btn-stop:hover {
+  background-color: #c82333;
+}
+
+/* Media query for small screens (below 768px) */
+@media (max-width: 768px) {
+  .icon-large {
+    font-size: 25px; /* Reduce icon size */
+  }
+
+  button {
+    padding: 10px 15px; /* Reduce button padding */
+    font-size: 16px; /* Reduce font size for button text */
+  }
+
+  .button-container {
+    gap: 10px; /* Decrease space between buttons */
+  }
+}
+
+/* Media query for extra small screens (below 480px) */
+@media (max-width: 480px) {
+  .icon-large {
+    font-size: 25px; /* Further reduce icon size */
+  }
+
+  button {
+    padding: 8px 12px; /* Further reduce button padding */
+    font-size: 14px; /* Further reduce font size */
+  }
+
+  .button-container {/
+    gap: 10px; /* Space between stacked buttons */
+  }
+}
+

@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Polyline, Marker, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSync, faMapMarkerAlt, faStopCircle, faUser } from '@fortawesome/free-solid-svg-icons';
 import iconUrl from 'leaflet/dist/images/marker-icon.png';
 import iconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png';
 import shadowUrl from 'leaflet/dist/images/marker-shadow.png';
 import { useNavigate } from 'react-router-dom';
+import './App.css';
 
 // Définir une icône personnalisée pour Leaflet
 const defaultIcon = L.icon({
@@ -137,21 +139,30 @@ const MapWithPositions = () => {
   }, [utilisateurId]);
 
   return (
-    <div style={{ height: '80vh', width: '100%' }}>
-      {nomUtilisateur && <p><strong style={{ textTransform: 'uppercase' }}>{nomUtilisateur}</strong> Connecté </p>}
+    <div className='' style={{ height: '80vh', width: '100%' }}>
+       {/* Connected User Display */}
+       {nomUtilisateur && (
+        <p className="user-info">
+          <FontAwesomeIcon icon={faUser} className="icon-large" /> <strong>{nomUtilisateur.toUpperCase()}</strong> Connecté
+        </p>
+      )}
 
-      <button onClick={fetchPositions} style={{ marginBottom: '10px' }}>
-        Rafraîchir les positions
-      </button>
+      <div className="button-container">
+        {/* Refresh Positions Button */}
+        <button onClick={fetchPositions} className="btn-refresh">
+          <FontAwesomeIcon icon={faSync} className="icon-large" /> Rafraîchir
+        </button>
 
-      <button onClick={() => setCenterOnUser(true)} style={{ marginBottom: '10px' }}>
-        Centrer sur ma position
-      </button>
+        {/* Center on User Button */}
+        <button onClick={() => setCenterOnUser(true)} className="btn-center">
+          <FontAwesomeIcon icon={faMapMarkerAlt} className="icon-large" /> Centrer sur ma position
+        </button>
 
-      {/* Bouton pour arrêter la surveillance de la géolocalisation */}
-      <button onClick={stopTracking} style={{ marginBottom: '10px', backgroundColor: 'red', color: 'white' }}>
-        Arrêter la géolocalisation
-      </button>
+        {/* Stop Geolocation Button */}
+        <button onClick={stopTracking} className="btn-stop">
+          <FontAwesomeIcon icon={faStopCircle} className="icon-large" /> Arrêter
+        </button>
+      </div>
 
       <MapContainer center={[0, 0]} zoom={16} style={{ height: '80vh', width: '100%' }}>
         <TileLayer
