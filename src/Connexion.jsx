@@ -6,6 +6,7 @@ const Connexion = () => {
   const [nom, setNom] = useState('');
   const [motDePasse, setMotDePasse] = useState('');
   const [watchId, setWatchId] = useState(null);
+  const [loading, setLoading] = useState(false); // État pour le loader
   const navigate = useNavigate();
 
   // Fonction pour envoyer la position au backend
@@ -34,6 +35,8 @@ const Connexion = () => {
 
   // Fonction de gestion de la connexion
   const handleLogin = () => {
+    setLoading(true); // Activer le loader au début de la connexion
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(position => {
         const { latitude, longitude } = position.coords;
@@ -62,8 +65,6 @@ const Connexion = () => {
               localStorage.setItem('nomUtilisateur', nomUtilisateur); // Stocker le nom
 
               sendPositionToBackend(latitude, longitude);
-              
-              navigate('/map'); // Rediriger vers la page de la carte
 
               // Surveiller la position toutes les 5 secondes après la connexion
               const watchId = navigator.geolocation.watchPosition(
@@ -80,14 +81,25 @@ const Connexion = () => {
               );
 
               setWatchId(watchId); // Stocker l'ID de surveillance
+
+              // Retarder la redirection de 1 seconde
+              setTimeout(() => {
+                setLoading(false); // Désactiver le loader
+                navigate('/map'); // Rediriger vers la page de la carte après 1 seconde
+              }, 1000);
             } else {
               console.error('Erreur lors de la connexion:', data.message);
+              setLoading(false); // Désactiver le loader en cas d'erreur
             }
           })
-          .catch(error => console.error('Erreur:', error));
+          .catch(error => {
+            console.error('Erreur:', error);
+            setLoading(false); // Désactiver le loader en cas d'erreur
+          });
       });
     } else {
       alert('La géolocalisation n\'est pas prise en charge par ce navigateur.');
+      setLoading(false); // Désactiver le loader si la géolocalisation échoue
     }
   };
 
@@ -104,21 +116,27 @@ const Connexion = () => {
     <div className="login-container">
       <h2>Connexion</h2>
       <div className="login-form">
-        <input
-          type="text"
-          placeholder="Nom"
-          value={nom}
-          onChange={e => setNom(e.target.value)}
-          className="input-field"
-        />
-        <input
-          type="password"
-          placeholder="Mot de passe"
-          value={motDePasse}
-          onChange={e => setMotDePasse(e.target.value)}
-          className="input-field"
-        />
-        <button onClick={handleLogin} className="login-button">Se connecter</button>
+        {loading ? (
+          <div className="spinner"></div> // Affichage du spinner pendant le chargement
+        ) : (
+          <>
+            <input
+              type="text"
+              placeholder="Nom"
+              value={nom}
+              onChange={e => setNom(e.target.value)}
+              className="input-field"
+            />
+            <input
+              type="password"
+              placeholder="Mot de passe"
+              value={motDePasse}
+              onChange={e => setMotDePasse(e.target.value)}
+              className="input-field"
+            />
+            <button onClick={handleLogin} className="login-button">Se connecter</button>
+          </>
+        )}
       </div>
     </div>
   );
