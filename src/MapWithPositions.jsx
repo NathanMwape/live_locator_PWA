@@ -44,7 +44,7 @@ const MapAutoFit = ({ positions, userPosition, centerOnUser, setCenterOnUser }) 
 
   useEffect(() => {
     if (centerOnUser && userPosition) {
-      map.setView(userPosition, map.getZoom());
+      map.setView(userPosition, 10);
       setCenterOnUser(false);
     } else if (positions.length > 0) {
       map.fitBounds(positions);
@@ -65,7 +65,7 @@ const MapWithPositions = () => {
   const nomUtilisateur = localStorage.getItem('nomUtilisateur');
 
   const fetchPositions = () => {
-    fetch(`http://localhost/api_test/index.php/position/?utilisateur_id=${utilisateurId}`)
+    fetch(`http://185.98.128.37/api_test/index.php/position/?utilisateur_id=${utilisateurId}`)
       .then(response => response.json())
       .then(data => {
         if (Array.isArray(data)) {
@@ -89,7 +89,7 @@ const MapWithPositions = () => {
           if (!lastPosition || haversineDistance(lastPosition, currentPosition) >= 1) {
             setUserPosition(currentPosition);
 
-            fetch('http://localhost/api_test/index.php/positions', {
+            fetch('http://185.98.128.37/api_test/index.php/positions', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ utilisateurId, latitude, longitude }),
@@ -164,7 +164,7 @@ const MapWithPositions = () => {
         </button>
       </div>
 
-      <MapContainer center={[0, 0]} zoom={16} style={{ height: '80vh', width: '100%' }}>
+      <MapContainer center={[0, 0]} zoom={10} style={{ height: '80vh', width: '100%' }}>
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

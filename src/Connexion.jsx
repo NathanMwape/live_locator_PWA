@@ -9,11 +9,22 @@ const Connexion = () => {
   const [loading, setLoading] = useState(false); // État pour le loader
   const navigate = useNavigate();
 
+  // Ajouter une vérification de connexion à l'ouverture du navigateur
+  useEffect(() => {
+    const utilisateurId = localStorage.getItem('utilisateurId');
+    const nomUtilisateur = localStorage.getItem('nomUtilisateur');
+
+    // Si l'utilisateur est déjà connecté, rediriger vers la carte
+    if (utilisateurId && nomUtilisateur) {
+      navigate('/map');
+    }
+  }, [navigate]); // Ce hook s'exécute une seule fois lors du chargement
+
   // Fonction pour envoyer la position au backend
   const sendPositionToBackend = (latitude, longitude) => {
     const utilisateurId = localStorage.getItem('utilisateurId'); // Récupérer l'ID utilisateur
 
-    fetch('http://localhost/api_test/index.php/positions', {
+    fetch('http://185.98.128.37/api_test/index.php/positions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -42,7 +53,7 @@ const Connexion = () => {
         const { latitude, longitude } = position.coords;
 
         // Envoyer la position lors de la connexion
-        fetch('http://localhost/api_test/index.php/login', {
+        fetch('http://185.98.128.37/api_test/index.php/login', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
