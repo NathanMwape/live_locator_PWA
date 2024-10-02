@@ -93,7 +93,7 @@ button:hover {
 }
 
 .icon-large {
-  font-size: 24px;
+  font-size: 25px;
   margin-right: 10px;
 }
 
@@ -140,7 +140,7 @@ button:hover {
     font-size: 14px; /* Further reduce font size */
   }
 
-  .button-container {/
+  .button-container {
     gap: 10px; /* Space between stacked buttons */
   }
 }
