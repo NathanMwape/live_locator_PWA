@@ -24,7 +24,7 @@ const Connexion = () => {
   const sendPositionToBackend = (latitude, longitude) => {
     const utilisateurId = localStorage.getItem('utilisateurId'); // Récupérer l'ID utilisateur
 
-    fetch('https://185.98.128.37/api_test/index.php/positions', {
+    fetch('http://185.98.128.37/api_test/index.php/positions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -53,7 +53,7 @@ const Connexion = () => {
         const { latitude, longitude } = position.coords;
 
         // Envoyer la position lors de la connexion
-        fetch('https://185.98.128.37/api_test/index.php/login', {
+        fetch('http://185.98.128.37/api_test/index.php/login', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
